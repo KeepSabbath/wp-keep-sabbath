@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 /*
  * Plugin Name:       Keep Sabbath
- * Plugin URI:        https://example.com/plugins/the-basics/
- * Description:       Plugin to help you observe the Biblical Sabbath and Holy days by automatically closing your Woocommerce shop or specific pages on your site.
+ * Plugin URI:        https://github.com/KeepSabbath/wp-keep-sabbath
+ * Description:       Plugin to help you observe the Biblical Sabbath and Holy days by automatically redirecting specific pages on your site.
  * Version:           1.0.0
  * Requires at least: 5.2
  * Requires PHP:      7.2
@@ -10,8 +10,8 @@
  * Author URI:        https://noahrahm.com
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Update URI:        https://example.com/my-plugin/
- * Text Domain:       keep-sabbath-plugin
+ * Update URI:        https://github.com/KeepSabbath/wp-keep-sabbath
+ * Text Domain:       keep-sabbath
  * Domain Path:       /languages
  */
 
@@ -99,24 +99,16 @@ class KeepSabbath {
         return self::$instance;
     }
 
-
     public function init() {
-
-        // Add Javascript and CSS for admin screens
-        //add_action('admin_enqueue_scripts', array($this,'enqueueAdmin'));
-
-        // Add Javascript and CSS for front-end display
-        //add_action('wp_enqueue_scripts', array($this,'enqueue'));
+        // Redirect
         add_action('template_redirect', array($this, 'redirect_if_sabbath'));
     }
-
 
     public function includes() {
         require_once KEEPSABBATH_PLUGIN_DIR . '/includes/sabbath.php';
 
         require_once KEEPSABBATH_PLUGIN_DIR . 'admin/class-keep-sabbath-admin.php';
     }
-
 
 	/**
 	 * Register all of the hooks related to the admin area functionality
@@ -135,27 +127,114 @@ class KeepSabbath {
         add_action( 'admin_menu', array($plugin_admin, 'setup_menu')); 
 
 	}
-
     
+    /**
+     * Get an array from a line separated list of items in an admin textarea option.
+     * 
+     * @since 1.0.0
+     *
+     * @param string $option_id The id of the option
+     * @return array<string> 
+     */
+    private function get_array_from_textarea_option(string $option_id) {
+		$options_str = preg_replace( '/\v(?:[\v\h]+)/', "\n", trim( strval( get_option( $option_id, '' ) ) ) );
+		$options_str = ( ! empty( $options_str ) ) ? $options_str : '';
+		return explode( "\n", $options_str );
+    }
+
+    /**
+     * Get the array of holy day DateTime objects from the admin option
+     * 
+     * @since 1.0.0
+     *
+     * @return array<DateTime> 
+     */
+    function get_holy_days_option() {
+        $holy_days = array();
+        $holy_day_dates = $this->get_array_from_textarea_option('keepsabbath_setting_holy_day_dates');
+
+        foreach ($holy_day_dates as $key => $val) {
+            $day = DateTime::createFromFormat('m/d/Y', $val);
+            array_push($holy_days, $day);
+        }
+        return $holy_days;
+    }
+
+    /**
+     * Get the latitude value from the admin option
+     * 
+     * @since 1.0.0
+     *
+     * @return float
+     */
+    function get_latitude_option() {
+        return trim( get_option('keepsabbath_setting_latitude') ) + 0.0;
+    }
+
+    /**
+     * Get the longitude value from the admin option
+     * 
+     * @since 1.0.0
+     *
+     * @return float
+     */
+    function get_longitude_option() {
+        return trim( get_option('keepsabbath_setting_longitude') ) + 0.0;
+    }
+
+    /**
+     * Get the array of pages to redirect from the admin option
+     * 
+     * @since 1.0.0
+     *
+     * @return array<string> 
+     */
+    function get_page_urls_to_redirect_option() {
+        $pages_to_redirect = $this->get_array_from_textarea_option('keepsabbath_setting_pages_to_redirect');
+        return $pages_to_redirect;
+    }
+
+    /**
+     * Get the redirect to page URL value from the admin option
+     * 
+     * @since 1.0.0
+     *
+     * @return string
+     */
+    function get_redirect_to_page_url_option() {
+        return trim( get_option('keepsabbath_setting_redirect_to_page') );
+    }
+    
+
+    /**
+     * Action callback to redirect pages if it is the Sabbath or a Holy day.
+     * 
+     * @since 1.0.0
+     *
+     * @return string
+     */
     function redirect_if_sabbath() {
         global $wp;
 
-        $days = array(
-            DateTime::createFromFormat('d/m/Y', '09/05/2023'),
-            DateTime::createFromFormat('d/m/Y', '12/05/2023'),
-        );
-
-        // WIP
-        // Checkout will be closed while we observe the Sabbath from 7:45pm ET Fri until 9:15pm ET Sat.
-        // Checkout is closed 
+        // Get options from the admin
+        $holy_days = $this->get_holy_days_option();
+        $lat = $this->get_latitude_option();
+        $lng = $this->get_longitude_option();
+        $urls_to_redirect = $this->get_page_urls_to_redirect_option();
+        $redirect_to_url = $this->get_redirect_to_page_url_option();
 
         $datetime = new Keep_Sabbath_DateTime();
-        $is_holy_day = $datetime->is_sabbath_or_holy_day($days, 36.952141, -92.660400);
+        $is_holy_day = $datetime->is_sabbath_or_holy_day($holy_days, $lat, $lng);
         //echo $is_holy_day ? "YES" : "NO";
         if ($is_holy_day) {
-            if( $wp->request == 'checkout' ) {
-                wp_redirect( site_url( '/' ) );
-                exit;
+
+            // Check the given redirect page URLs and redirect if 
+            // the website visitor is requesting that URL.
+            foreach ($urls_to_redirect as $key => $val) {
+                if ( $wp->request == $val ) {
+                    wp_redirect( site_url( $redirect_to_url ) );
+                    exit;
+                }
             }
         }
     }

@@ -84,56 +84,187 @@ class Keep_Sabbath_Admin {
      * @access 	public
     */
     public function register_settings() {
-        // Add a General section
+        // Add Your Location section
         add_settings_section(
-            $this->option_name. '_general',
-            __( 'General', 'keepsabbath' ),
-            array( $this, $this->option_name . '_general_cb' ),
+            'keepsabbath_setting_your_location_section',
+            __( 'Your Location', 'keepsabbath' ),
+            array( $this, 'your_location_section_cb' ),
+            $this->plugin_name
+        );
+
+        add_settings_field(
+            'keepsabbath_setting_latitude',
+            __( 'Latitude', 'keepsabbath' ),
+            array( $this, 'setting_setting_latitude_cb' ),
+            $this->plugin_name,
+            'keepsabbath_setting_your_location_section',
+            array( 'label_for' => 'keepsabbath_setting_latitude' )
+        );
+
+        add_settings_field(
+            'keepsabbath_setting_longitude',
+            __( 'Longitude', 'keepsabbath' ),
+            array( $this, 'setting_setting_longitude_cb' ),
+            $this->plugin_name,
+            'keepsabbath_setting_your_location_section',
+            array( 'label_for' => 'keepsabbath_setting_longitude' )
+        );
+
+        // Add Holy Day Dates section
+        add_settings_section(
+            'keepsabbath_setting_holy_day_dates_section',
+            __( 'Holy Day Dates', 'keepsabbath' ),
+            array( $this, 'holy_day_dates_section_cb' ),
             $this->plugin_name
         );
         // Add a boolean field
+        // add_settings_field(
+        //     $this->option_name . '_bool',
+        //     __( 'Boolean setting', 'keepsabbath' ),
+        //     array( $this, $this->option_name . '_bool_cb' ),
+        //     $this->plugin_name,
+        //     $this->option_name . '_your_location_section',
+        //     array( 'label_for' => $this->option_name . '_bool' )
+        // );
+
         add_settings_field(
-            $this->option_name . '_bool',
-            __( 'Boolean setting', 'keepsabbath' ),
-            array( $this, $this->option_name . '_bool_cb' ),
+            'keepsabbath_setting_holy_day_dates',
+            __( 'Holy Days (One date per line in the format MM/DD/YYYY)', 'keepsabbath' ),
+            array( $this, 'holy_day_dates_textarea_cb' ),
             $this->plugin_name,
-            $this->option_name . '_general',
-            array( 'label_for' => $this->option_name . '_bool' )
+            'keepsabbath_setting_holy_day_dates_section',
+            array( 'label_for' => 'keepsabbath_setting_holy_day_dates' )
         );
-        // Add a numeric field
+
+        // Add Page Redirect section
+        add_settings_section(
+            'keepsabbath_setting_page_redirect_section',
+            __( 'Page Redirect Settings', 'keepsabbath' ),
+            array( $this, 'page_redirect_settings_section_cb' ),
+            $this->plugin_name
+        );
+
         add_settings_field(
-            $this->option_name . '_number',
-            __( 'Number setting', 'keepsabbath' ),
-            array( $this, $this->option_name . '_number_cb' ),
+            'keepsabbath_setting_pages_to_redirect',
+            __( 'Page URLs (One per line)', 'keepsabbath' ),
+            array( $this, 'pages_to_redirect_textarea_cb' ),
             $this->plugin_name,
-            $this->option_name . '_general',
-            array( 'label_for' => $this->option_name . '_number' )
+            'keepsabbath_setting_page_redirect_section',
+            array( 'label_for' => 'keepsabbath_setting_pages_to_redirect' )
         );
+
+        add_settings_field(
+            'keepsabbath_setting_redirect_to_page',
+            __( 'Redirect to page URL', 'keepsabbath' ),
+            array( $this, 'redirect_to_page_cb' ),
+            $this->plugin_name,
+            'keepsabbath_setting_page_redirect_section',
+            array( 'label_for' => 'keepsabbath_setting_redirect_to_page' )
+        );
+
+
         // Register the boolean field
-        register_setting( $this->plugin_name, $this->option_name . '_bool', array( $this, $this->option_name . '_sanitize_bool' ) );
+        //register_setting( $this->plugin_name, $this->option_name . '_bool', array( $this, $this->option_name . '_sanitize_bool' ) );
         // Register the numeric field
-        register_setting( $this->plugin_name, $this->option_name . '_number', 'integer' );
+        register_setting( $this->plugin_name, 'keepsabbath_setting_latitude', 'integer' );
+        register_setting( $this->plugin_name, 'keepsabbath_setting_longitude', 'integer' );
+
+        register_setting( $this->plugin_name, 'keepsabbath_setting_holy_day_dates', 'string' );
+        register_setting( $this->plugin_name, 'keepsabbath_setting_pages_to_redirect', 'string' );
+        register_setting( $this->plugin_name, 'keepsabbath_setting_redirect_to_page', 'string' );
     } 
 
     /**
-     * Render the text for the general section
+     * Render the text for the Your Location section
      *
      * @since  	1.0.0
      * @access 	public
     */
-    public function keepsabbath_setting_general_cb() {
-        echo '<p>' . __( 'Settings.', 'keepsabbath' ) . '</p>';
+    public function your_location_section_cb() {
+        echo '<p>' . __( 'Used to accurately calculate the sunset times for your area. You can use any latitude/longitude finder online to find the right coordinates from your address. (e.g: Latitude 38.895438 Longitude -77.031281)', 'keepsabbath' ) . '</p>';
     } 
 
     /**
-     * Render the number input for this plugin
+     * Render the Latitude input
      *
      * @since  1.0.0
      * @access public
      */
-    public function keepsabbath_setting_number_cb() {
-        $val = get_option( $this->option_name . '_number' );
-        echo '<input type="text" name="' . $this->option_name . '_number' . '" id="' . $this->option_name . '_number' . '" value="' . $val . '"> ' . __( '(?)', 'keepsabbath' );
+    public function setting_setting_latitude_cb() {
+        $val = get_option( 'keepsabbath_setting_latitude' );
+        echo '<input type="text" name="keepsabbath_setting_latitude" id="keepsabbath_setting_latitude" value="' . $val . '"> ';
+    } 
+
+    /**
+     * Render the Longitude input
+     *
+     * @since  1.0.0
+     * @access public
+     */
+    public function setting_setting_longitude_cb() {
+        $val = get_option( 'keepsabbath_setting_longitude' );
+        echo '<input type="text" name="keepsabbath_setting_longitude" id="keepsabbath_setting_longitude" value="' . $val . '"> ';
+    } 
+
+    /**
+     * Render the text for the Holy Day Dates section
+     *
+     * @since  	1.0.0
+     * @access 	public
+    */
+    public function holy_day_dates_section_cb() {
+        echo '<p>' . __( 'A list of the Holy day dates in the MM/DD/YYYY format (e.g: 05/10/2023).', 'keepsabbath' ) . '</p>';
+    } 
+
+    /**
+     * Render the textfield for the Holy Days
+     *
+     * @since  	1.0.0
+     * @access 	public
+    */
+    public function holy_day_dates_textarea_cb() {
+        echo '<textarea name="keepsabbath_setting_holy_day_dates" type="textarea" cols="" rows="7">';
+        $val = get_option( 'keepsabbath_setting_holy_day_dates' );
+		if ( $val != "") {
+			echo $val;
+		}
+		echo '</textarea>';
+    }
+
+    /**
+     * Render the text for the Page Redirect Settings section
+     *
+     * @since  	1.0.0
+     * @access 	public
+    */
+    public function page_redirect_settings_section_cb() {
+        echo '<p>' . __( 'Redirect pages to a certain URL when it is the Sabbath or a Holy day.', 'keepsabbath' ) . '</p>';
+    } 
+
+    /**
+     * Render the textfield for the Page Redirect Settings
+     *
+     * @since  	1.0.0
+     * @access 	public
+    */
+    public function pages_to_redirect_textarea_cb() {
+        echo '<textarea name="keepsabbath_setting_pages_to_redirect" type="textarea" cols="" rows="7">';
+        $val = get_option( 'keepsabbath_setting_pages_to_redirect' );
+		if ( $val != "") {
+			echo $val;
+		}
+		echo '</textarea>';
+    }
+
+    /**
+     * Render the Redirect to Page URL input
+     *
+     * @since  1.0.0
+     * @access public
+     */
+    public function redirect_to_page_cb() {
+        $val = get_option( 'keepsabbath_setting_redirect_to_page' );
+        echo '<input type="text" name="keepsabbath_setting_redirect_to_page" id="keepsabbath_setting_redirect_to_page" value="' . $val . '"> ';
     } 
 
     /**
