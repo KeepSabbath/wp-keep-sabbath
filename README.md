@@ -1,10 +1,9 @@
 # Keep Sabbath: Wordpress plugin
 
-A WordPress plugin to help you observe the Biblical Sabbath and Holy days by automatically redirecting specific pages on your site. 
+A WordPress plugin to help you observe the Biblical Sabbath and Holy days by automatically redirecting specific pages of your site on those days.
 
-**Still WIP, but usable right now :)**
 
-## About this initiative
+## About this Initiative
 
 This plugin is to help those that want to keep the 7th-day Sabbath and Biblical Holy days set-apart (holy) by not buying or selling on them. (Genesis 2:2,3 ; Isaiah 58:13,14 ; Amos 8:5 ; Nehemiah 10: 31 ; Jeremiah 17:21,22 ; Matthew 6:33 ; Acts 16:13)
 

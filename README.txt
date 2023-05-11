@@ -1,6 +1,6 @@
 === Keep Sabbath ===
 Contributors: correctsyntax
-Donate link: http://example.com/
+Donate link:
 Tags: 
 Requires at least: 3.0.1
 Tested up to: 6.2
@@ -8,7 +8,7 @@ Stable tag: 6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A WordPress plugin to help you observe the Biblical Sabbath and Holy days by automatically closing your Woocommerce shop or redirecting specific pages on your site.
+Plugin to help you observe the Biblical Sabbath and Holy days by automatically redirecting specific pages of your site on those days.
 
 == Description ==
 
