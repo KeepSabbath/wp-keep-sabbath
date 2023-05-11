@@ -252,7 +252,7 @@ class KeepSabbath {
         $datetime = new Keep_Sabbath_DateTime();
         $is_holy_day = $datetime->is_sabbath_or_holy_day($holy_days, $lat, $lng);
         //echo $is_holy_day ? "YES" : "NO";
-        if ($is_holy_day) {
+        if ($is_holy_day && $urls_to_redirect != array() && $redirect_to_url != '') {
 
             // Check the given redirect page URLs and redirect if 
             // the website visitor is requesting that URL.
