@@ -98,12 +98,28 @@ class KeepSabbath {
     public function init() {
         // Redirect
         add_action('template_redirect', array($this, 'redirect_if_sabbath'));
+
+        // Add settings link to plugins page
+        add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($this, 'add_plugin_page_settings_link'));
     }
 
     public function includes() {
         require_once KEEPSABBATH_PLUGIN_DIR . '/includes/sabbath.php';
 
         require_once KEEPSABBATH_PLUGIN_DIR . 'admin/class-keep-sabbath-admin.php';
+    }
+
+	/**
+	 * Adds the settings link to the admin plugins page
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 */
+    public function add_plugin_page_settings_link( $links ) {
+        $links[] = '<a href="' .
+            admin_url( 'options-general.php?page=keepsabbath' ) .
+            '">' . __('Settings') . '</a>';
+        return $links;
     }
 
 	/**
@@ -115,9 +131,6 @@ class KeepSabbath {
 	 */
 	private function define_admin_hooks() {
 		$plugin_admin = new Keep_Sabbath_Admin($this->plugin_name, $this->version);
-
-		add_action( 'admin_enqueue_scripts', array($plugin_admin, 'enqueue_styles'));
-		add_action( 'admin_enqueue_scripts', array($plugin_admin, 'enqueue_scripts'));
 
         add_action( 'admin_init', array($plugin_admin, 'register_settings'));
         add_action( 'admin_menu', array($plugin_admin, 'setup_menu')); 

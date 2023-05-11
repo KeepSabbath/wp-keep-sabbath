@@ -73,7 +73,14 @@ class Keep_Sabbath_Admin {
      * @access 	public
     */
     public function setup_menu(){
-		add_menu_page( 'Keep Sabbath Settings', 'Keep Sabbath', 'manage_options', 'keepsabbath', array($this, 'init'), 'dashicons-welcome-learn-more' );
+        // Add link to Settings menu
+        add_options_page(
+            'Keep Sabbath', 
+            'Keep Sabbath', 
+            'manage_options', 
+            'keepsabbath', 
+            array( $this, 'init' )
+        );
 	} 
 
 
@@ -126,15 +133,6 @@ class Keep_Sabbath_Admin {
             array( $this, 'holy_day_dates_section_cb' ),
             $this->plugin_name
         );
-        // Add a boolean field
-        // add_settings_field(
-        //     $this->option_name . '_bool',
-        //     __( 'Boolean setting', 'keepsabbath' ),
-        //     array( $this, $this->option_name . '_bool_cb' ),
-        //     $this->plugin_name,
-        //     $this->option_name . '_your_location_section',
-        //     array( 'label_for' => $this->option_name . '_bool' )
-        // );
 
         add_settings_field(
             'keepsabbath_setting_holy_day_dates',
@@ -171,7 +169,6 @@ class Keep_Sabbath_Admin {
             array( 'label_for' => 'keepsabbath_setting_redirect_to_page' )
         );
 
-        //register_setting( $this->plugin_name, $this->option_name . '_bool', array( $this, $this->option_name . '_sanitize_bool' ) );
         register_setting( $this->plugin_name, 'keepsabbath_setting_latitude', 'integer' );
         register_setting( $this->plugin_name, 'keepsabbath_setting_longitude', 'integer' );
         register_setting( $this->plugin_name, 'keepsabbath_setting_date_timezone', 'array' );
@@ -316,52 +313,4 @@ class Keep_Sabbath_Admin {
             </fieldset>
         <?php
     } 
-
-
-	/**
-	 * Register the stylesheets for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_styles() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Plugin_Name_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Plugin_Name_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/plugin-name-admin.css', array(), $this->version, 'all' );
-
-	}
-
-	/**
-	 * Register the JavaScript for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Plugin_Name_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Plugin_Name_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/plugin-name-admin.js', array( 'jquery' ), $this->version, false );
-
-	}
-
 }
