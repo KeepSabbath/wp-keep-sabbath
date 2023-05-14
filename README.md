@@ -5,15 +5,14 @@ A WordPress plugin to help you observe the Biblical Sabbath and Holy days by aut
 
 ## About this Initiative
 
-This plugin is to help those that want to keep the 7th-day Sabbath and Biblical Holy days set-apart (holy) by not buying or selling on them. (Genesis 2:2,3 ; Isaiah 58:13,14 ; Amos 8:5 ; Nehemiah 10: 31 ; Jeremiah 17:21,22 ; Matthew 6:33 ; Acts 16:13)
+Keep Sabbath is a plugin to help those that want to keep the 7th-day Sabbath and Biblical Holy days set-apart (holy) by not buying or selling on them. (Genesis 2:2,3 ; Isaiah 58:13,14 ; Amos 8:5 ; Nehemiah 10: 31 ; Jeremiah 17:21,22 ; Matthew 6:33 ; Acts 16:13)
 
-You can input specific page URLs to redirect to a certain page during the Sabbath or specified Holy days. This is useful for e-commerce sites or any site that has online purchasing so that you can close it down automatically before the Sabbath or Holy days begin.
+You can input specific page URLs to redirect to a certain page URL during the Sabbath and/or specified Holy days. This is useful for e-commerce sites or any site that has online purchasing. It will automatically start redirecting when the Sabbath or Holy days begin, and stop re-directing afterwards.
 
-The timing is based on the understanding that Biblical days begin at sunset and ends at sunset the following day.
+The timing is based on the understanding that Biblical days begin at sunset and end at sunset the following day.
 
-For the 7th-day Sabbath, this means from sundown Fri. to sundown Sat. it will automatically redirect with no extra configuration from you. 
-
-For Biblical holy days (Passover, Pentacost, etc) this means that the day will start sundown the day prior to the day you specify in the admin Holy Day Dates setting.
+* For the 7th-day Sabbath, this means from sundown Fri. to sundown Sat. it will automatically redirect with no extra configuration from you. 
+* For Biblical holy days (Passover, Pentacost, etc) this means that the day will start sundown the day prior to the day you specify in the admin Holy Day Dates setting.
 
 
 ## Note
