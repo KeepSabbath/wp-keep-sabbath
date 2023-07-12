@@ -4,12 +4,16 @@
  *
  * This file is used to markup the admin-facing aspects of the plugin.
  *
- * @link       http://example.com
  * @since      1.0.0
  *
  * @package    Keep_Sabbath
  * @subpackage Keep_Sabbath/admin/partials
  */
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; 
+}
 ?>
 <div class="wrap">
  <h2><?php echo esc_html( get_admin_page_title() ); ?></h2>

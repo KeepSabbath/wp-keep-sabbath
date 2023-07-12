@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -8,6 +7,11 @@
  * @package    Keep_Sabbath
  * @subpackage Keep_Sabbath/admin
  */
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; 
+}
 
 
 class Keep_Sabbath_Admin {
