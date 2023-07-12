@@ -4,7 +4,7 @@ Donate link:
 Tags: sabbath, shabbat, holy, feasts, redirect
 Requires at least: 3.0.1
 Tested up to: 6.2
-Stable tag: 6.2
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,5 +53,5 @@ Alternatively you can download the file from here, unzip it and move the unzippe
 
 == Changelog ==
 
-= 1.0 =
+= 1.0.0 =
 * Initial plugin release
