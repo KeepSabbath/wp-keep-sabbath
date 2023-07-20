@@ -27,15 +27,13 @@ The timing is based on the understanding that Biblical days begin at sunset and 
 
 2. Use a latitude/longitude finder online to find the right coordinates from your address and input them into the Latitude and Longitude fields.  
 
-3. Choose your timezone.
+3. Optionally, input dates of Holy Days into the Holy day dates field, one per line in the MM/DD/YYYY format.
 
-4. Optionally, input dates of Holy Days into the Holy day dates field, one per line in the MM/DD/YYYY format.
+4. Input page names into the Page URLs field, one per line. These are the pages you want to redirect during the Sabbath or a Holy day.
 
-5. Input page names into the Page URLs field, one per line. These are the pages you want to redirect during the Sabbath or a Holy day.
+5. Input the page name of the page you want vistors to be redirect to on the Sabbath or Holy days in the Redirect to page URL field.
 
-6. Input the page name of the page you want vistors to be redirect to on the Sabbath or Holy days in the Redirect to page URL field.
-
-7. Click the Save Changes button, and you're done!
+6. Click the Save Changes button, and you're done! The plugin will automatically redirect the URLs to the given page on Sabbath or a Holy day.
 
 == Installation ==
 
