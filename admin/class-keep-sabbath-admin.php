@@ -121,15 +121,6 @@ class Keep_Sabbath_Admin {
             array( 'label_for' => 'keepsabbath_setting_longitude' )
         );
 
-        add_settings_field(
-            'keepsabbath_setting_date_timezone',
-            __( 'Time Zone', 'keepsabbath' ),
-            array( $this, 'date_timezone_cb' ),
-            $this->plugin_name,
-            'keepsabbath_setting_your_location_section',
-            array( 'label_for' => 'keepsabbath_setting_date_timezone' )
-        );
-
         // Add Holy Day Dates section
         add_settings_section(
             'keepsabbath_setting_holy_day_dates_section',
@@ -175,7 +166,6 @@ class Keep_Sabbath_Admin {
 
         register_setting( $this->plugin_name, 'keepsabbath_setting_latitude', 'integer' );
         register_setting( $this->plugin_name, 'keepsabbath_setting_longitude', 'integer' );
-        register_setting( $this->plugin_name, 'keepsabbath_setting_date_timezone', 'array' );
 
         register_setting( $this->plugin_name, 'keepsabbath_setting_holy_day_dates', 'string' );
         register_setting( $this->plugin_name, 'keepsabbath_setting_pages_to_redirect', 'string' );
@@ -213,26 +203,6 @@ class Keep_Sabbath_Admin {
         $val = get_option( 'keepsabbath_setting_longitude' );
         echo '<input type="text" name="keepsabbath_setting_longitude" id="keepsabbath_setting_longitude" value="' . $val . '"> ';
     } 
-
-    /**
-     * Render the date timezone dropdown
-     *
-     * @since  1.0.0
-     * @access public
-     */
-    public function date_timezone_cb() {
-        // Values from https://www.php.net/manual/en/timezones.php
-        $timezone_identifiers = DateTimeZone::listIdentifiers();
-
-        $default = get_option( 'keepsabbath_setting_date_timezone' );
-        echo '<select id="keepsabbath_setting_date_timezone" name="keepsabbath_setting_date_timezone"';
-        foreach ($timezone_identifiers as $key => $val) {
-            echo '<option value="'. $val .'"' . ($default == $val ? 'selected' : '') .'>';
-            echo $val;
-            echo '</option>';
-        }
-        echo '</select>';
-    }
 
     /**
      * Render the text for the Holy Day Dates section

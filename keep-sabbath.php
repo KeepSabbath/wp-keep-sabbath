@@ -191,18 +191,6 @@ class KeepSabbath {
     }
 
     /**
-     * Get the timezone value from the admin option
-     * 
-     * @since 1.0.0
-     *
-     * @return string
-     */
-    function get_timezone_option() {
-        $timezone = get_option('keepsabbath_setting_date_timezone');
-        return $timezone != '' ? $timezone : 'America/Chicago';
-    }
-
-    /**
      * Get the array of pages to redirect from the admin option
      * 
      * @since 1.0.0
@@ -237,15 +225,11 @@ class KeepSabbath {
         global $wp;
 
         // Get options from the admin
-        $timezone = $this->get_timezone_option();
         $holy_days = $this->get_holy_days_option();
         $lat = $this->get_latitude_option();
         $lng = $this->get_longitude_option();
         $urls_to_redirect = $this->get_page_urls_to_redirect_option();
         $redirect_to_url = $this->get_redirect_to_page_url_option();
-
-        // Set the time zone
-        date_default_timezone_set($timezone);
 
         // Get whether it is the Sabbath or a Holy day
         $datetime = new Keep_Sabbath_DateTime();
