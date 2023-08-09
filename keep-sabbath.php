@@ -162,8 +162,10 @@ class KeepSabbath {
         $holy_day_dates = $this->get_array_from_textarea_option('keepsabbath_setting_holy_day_dates');
 
         foreach ($holy_day_dates as $key => $val) {
-            $day = DateTime::createFromFormat('m/d/Y', $val);
-            array_push($holy_days, $day);
+            if ($val !== '') {
+                $day = DateTime::createFromFormat('m/d/Y', $val);
+                array_push($holy_days, $day);
+            }
         }
         return $holy_days;
     }
