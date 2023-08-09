@@ -164,12 +164,54 @@ class Keep_Sabbath_Admin {
             array( 'label_for' => $this->prefix . '_redirect_to_page' )
         );
 
-        register_setting( $this->plugin_name, $this->prefix . '_latitude', 'integer' );
-        register_setting( $this->plugin_name, $this->prefix .'_longitude', 'integer' );
 
-        register_setting( $this->plugin_name, $this->prefix . '_holy_day_dates', 'string' );
-        register_setting( $this->plugin_name, $this->prefix . '_pages_to_redirect', 'string' );
-        register_setting( $this->plugin_name, $this->prefix . '_redirect_to_page', 'string' );
+        // Register settings
+        register_setting( 
+            $this->plugin_name, 
+            $this->prefix . '_latitude', 
+            array(
+                'type'              => 'float',
+                'show_in_rest'      => true,
+                'sanitize_callback' => array( $this, 'sanitize_latitude_input'),
+            )
+        );
+        register_setting( 
+            $this->plugin_name, 
+            $this->prefix .'_longitude', 
+            array(
+                'type'              => 'float',
+                'show_in_rest'      => true,
+                'sanitize_callback' => array( $this, 'sanitize_longitude_input'),
+            )
+        );
+
+        register_setting( 
+            $this->plugin_name, 
+            $this->prefix . '_holy_day_dates', 
+            array(
+                'type'              => 'string',
+                'show_in_rest'      => true,
+                'sanitize_callback' => array( $this, 'sanitize_holy_day_dates_textarea'),
+            )
+        );
+        register_setting( 
+            $this->plugin_name, 
+            $this->prefix . '_pages_to_redirect', 
+            array(
+                'type'              => 'string',
+                'show_in_rest'      => true,
+                'sanitize_callback' => array( $this, 'sanitize_pages_to_redirect_textarea'),
+            )
+        );
+        register_setting( 
+            $this->plugin_name, 
+            $this->prefix . '_redirect_to_page', 
+            array(
+                'type'              => 'url',
+                'show_in_rest'      => true,
+                'sanitize_callback' => array( $this, 'sanitize_redirect_to_page_input'),
+            )
+        );
     } 
 
     /**
@@ -194,6 +236,23 @@ class Keep_Sabbath_Admin {
     } 
 
     /**
+     * Sanitize the Latitude input
+     *
+     * @since  1.0.0
+     * @access public
+     */
+    public function sanitize_latitude_input($input) {
+        $old_option = get_option( $this->prefix . '_latitude' );
+
+        if ( filter_var($input, FILTER_VALIDATE_FLOAT)!== false ) {
+            return $input;
+        } else {
+            add_settings_error( $this->prefix . '_latitude', esc_attr('settings_updated'), __('Incorrect latitude.'), 'error' );
+            return $old_option;
+        }
+    } 
+
+    /**
      * Render the Longitude input
      *
      * @since  1.0.0
@@ -202,6 +261,23 @@ class Keep_Sabbath_Admin {
     public function longitude_input() {
         $val = get_option( 'keepsabbath_setting_longitude' );
         echo '<input type="text" name="keepsabbath_setting_longitude" id="keepsabbath_setting_longitude" value="' . esc_attr($val) . '"> ';
+    } 
+
+    /**
+     * Sanitize the Longitude input
+     *
+     * @since  1.0.0
+     * @access public
+     */
+    public function sanitize_longitude_input($input) {
+        $old_option = get_option( $this->prefix . '_longitude' );
+
+        if ( filter_var($input, FILTER_VALIDATE_FLOAT)!== false ) {
+            return $input;
+        } else {
+            add_settings_error( $this->prefix . '_longitude', esc_attr('settings_updated'), __('Incorrect longitude.'), 'error' );
+            return $old_option;
+        }
     } 
 
     /**
@@ -230,6 +306,16 @@ class Keep_Sabbath_Admin {
     }
 
     /**
+     * Sanitize the textfield for the Holy Days
+     *
+     * @since  	1.0.0
+     * @access 	public
+    */
+    public function sanitize_holy_day_dates_textarea($input) {
+        return sanitize_textarea_field($input);
+    }
+
+    /**
      * Render the text for the Page Redirect Settings section
      *
      * @since  	1.0.0
@@ -255,6 +341,16 @@ class Keep_Sabbath_Admin {
     }
 
     /**
+     * Sanitize the textfield for the Page Redirect Settings
+     *
+     * @since  	1.0.0
+     * @access 	public
+    */
+    public function sanitize_pages_to_redirect_textarea($input) {
+        return sanitize_textarea_field($input);
+    }
+
+    /**
      * Render the Redirect to Page URL input
      *
      * @since  1.0.0
@@ -263,5 +359,22 @@ class Keep_Sabbath_Admin {
     public function redirect_to_page_input() {
         $val = get_option( 'keepsabbath_setting_redirect_to_page' );
         echo '<input type="text" name="keepsabbath_setting_redirect_to_page" id="keepsabbath_setting_redirect_to_page" value="' . esc_url($val) . '"> ';
+    } 
+
+    /**
+     * Sanitize the Redirect to Page URL input
+     *
+     * @since  1.0.0
+     * @access public
+     */
+    public function sanitize_redirect_to_page_input($input) {
+        $old_option = get_option( $this->prefix . '_redirect_to_page' );
+
+        if ( wp_validate_redirect($input)!== '' ) {
+            return sanitize_url($input);
+        } else {
+            add_settings_error( $this->prefix . '_redirect_to_page', esc_attr('settings_updated'), __('Incorrect page redirect URL.'), 'error' );
+            return $old_option;
+        }
     } 
 }
