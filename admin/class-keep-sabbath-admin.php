@@ -85,8 +85,7 @@ class Keep_Sabbath_Admin {
             'keepsabbath', 
             array( $this, 'init' )
         );
-	} 
-
+	}
 
     /**
      * Register the setting parameters
@@ -212,24 +211,7 @@ class Keep_Sabbath_Admin {
                 'sanitize_callback' => array( $this, 'sanitize_redirect_to_page_input'),
             )
         );
-
-        // Set the defaults
-        $this->set_option_defaults();
     } 
-
-    /**
-     * Set default values of the options
-     *
-     * @since  	1.0.0
-     * @access 	public
-    */
-    public function set_option_defaults() {
-        update_option( $this->prefix . '_latitude',  38.895438);
-        update_option( $this->prefix . '_longitude',  -77.031281);
-        update_option( $this->prefix . '_holy_day_dates',  '08/09/2023');
-        update_option( $this->prefix . '_pages_to_redirect',  'shop');
-        update_option( $this->prefix . '_redirect_to_page',  '/');
-    }
 
     /**
      * Render the text for the Your Location section

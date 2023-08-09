@@ -131,9 +131,8 @@ class KeepSabbath {
 	private function define_admin_hooks() {
 		$plugin_admin = new Keep_Sabbath_Admin($this->plugin_name, $this->version);
 
-        add_action( 'admin_init', array($plugin_admin, 'register_settings'));
-        add_action( 'admin_menu', array($plugin_admin, 'setup_menu')); 
-
+        add_action( 'admin_init', array( $plugin_admin, 'register_settings' ) );
+        add_action( 'admin_menu', array( $plugin_admin, 'setup_menu' ) ); 
 	}
     
     /**
@@ -271,3 +270,20 @@ function keep_sabbath_init() {
 
 add_action('plugins_loaded', 'keep_sabbath_init');
 
+
+/**
+ * Plugin activation
+ *
+ * @since  	1.0.0
+ * @access 	public
+*/
+function keepsabbath_activate() {
+    // Set default values of the options on plugin activation
+    update_option( 'keepsabbath_setting_latitude',  38.895438);
+    update_option( 'keepsabbath_setting_longitude',  -77.031281);
+    update_option( 'keepsabbath_setting_holy_day_dates',  '08/08/2023');
+    update_option( 'keepsabbath_setting_pages_to_redirect',  'shop');
+    update_option( 'keepsabbath_setting_redirect_to_page',  '/');
+}
+
+register_activation_hook( __FILE__, 'keepsabbath_activate' );
