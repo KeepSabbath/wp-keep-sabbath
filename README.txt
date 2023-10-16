@@ -3,7 +3,7 @@ Contributors: correctsyntax
 Donate link:
 Tags: sabbath, shabbat, holy, feasts, redirect
 Requires at least: 3.0.1
-Tested up to: 6.2
+Tested up to: 6.3
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
