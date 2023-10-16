@@ -1,6 +1,6 @@
 # Keep Sabbath: Wordpress plugin
 
-A WordPress plugin to help you observe the Biblical Sabbath and Holy days by automatically redirecting specific pages of your site on those days.
+A WordPress plugin to help you observe the Biblical Sabbath and Holy days by automatically redirecting specific pages of your site on those days. Keep Sabbath is available in the Wordpress.org plugin directory [here](https://wordpress.org/plugins/keep-sabbath/).
 
 
 ## About this Initiative
