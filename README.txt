@@ -18,7 +18,7 @@ You can input specific page URLs to redirect to a certain page URL during the Sa
 
 The timing is based on the understanding that Biblical days begin at sunset and end at sunset the following day.
 
-* For the 7th-day Sabbath, this means from sundown Fri. to sundown Sat. it will automatically redirect with no extra configuration from you. 
+* For the 7th-day Sabbath, this means from sundown Fri. to sundown Sat. it will automatically redirect with no extra configuration from you.
 * For Biblical holy days (Passover, Pentacost, etc) this means that the day will start sundown the day prior to the day you specify in the admin Holy Day Dates setting.
 
 == Setting up ==
